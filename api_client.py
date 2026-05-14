@@ -16,7 +16,7 @@ BASE_URL = "https://api.open-meteo.com/v1/forecast"
 
 
 class WeatherDataClient:
-    """Responsible only for fetching weather payload from Open-Meteo."""
+    """Atbildīgs tikai par datu saņemšanu no Open-Meteo."""
 
     def fetch_weather(self, latitude, longitude):
         params = {
@@ -24,7 +24,7 @@ class WeatherDataClient:
             "longitude": longitude,
             "hourly": "temperature_2m,wind_speed_10m",
             "timezone": "auto",
-            "forecast_days": 2,
+            "forecast_days": 2,   #šo varētu likt kā mainīgo pie interaktīvās ievades.
         }
         url = f"{BASE_URL}?{urlencode(params)}"
 
@@ -33,7 +33,7 @@ class WeatherDataClient:
 
 
 class WeatherDataLoader:
-    """Loads weather data from Open-Meteo API."""
+    """Ielādē laikapstākļu datus no Open-Meteo API."""
 
     def __init__(self, city_coordinates, data_client=None):
         self.city_coordinates = city_coordinates

@@ -22,7 +22,7 @@ class TestWeatherAnalysis(unittest.TestCase):
         self.assertEqual(args.metric, "temperature")
 
     def test_resolve_city_case_insensitive(self):
-        city = resolve_city(["Rīga", "Liepāja"], "rĪGa")
+        city = resolve_city(["Rīga", "Liepāja"], "RĪGa")
 
         self.assertEqual(city, "Rīga")
 

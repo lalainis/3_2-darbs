@@ -4,7 +4,7 @@ from datetime import datetime
 
 @dataclass
 class WeatherRecord:
-    """One weather row object."""
+    """Viens laikapstākļu ieraksts."""
 
     city: str
     date_time: datetime
@@ -12,12 +12,12 @@ class WeatherRecord:
     wind_speed: float
 
     def value_for(self, metric: str):
-        """Return metric value by metric name."""
+        """Atgriež vērtību pēc metrikas nosaukuma."""
         return getattr(self, metric)
 
 
 class WeatherAnalyzer:
-    """Filters and aggregates weather records."""
+    """Filtrē un apkopo laikapstākļu ierakstus."""
 
     def __init__(self, records):
         self.records = records

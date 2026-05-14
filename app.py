@@ -8,22 +8,22 @@ from models import WeatherAnalyzer
 
 
 def ask_city(cities):
-    print("Available cities:", ", ".join(cities))
+    print("Pieejamās Pilsētas:", ", ".join(cities))
     while True:
-        city = input("Choose city: ").strip()
+        city = input("Izvēlieties pilsētu: ").strip()
         if city.lower() in {item.lower() for item in cities}:
             return city
-        print("City not found. Please choose from the list.")
+        print("Pilsēta nav atrasta. Lūdzu, izvēlieties no saraksta.")
 
 
 def ask_metric_plotter():
-    print("Choose metric: temperature, wind_speed")
+    print("Izvēlieties metriku: temperature, wind_speed")
     plotters = _plotter_map()
     while True:
-        metric = input("Metric: ").strip().lower()
+        metric = input("Metrika: ").strip().lower()
         if metric in plotters:
             return plotters[metric]()
-        print("Invalid metric. Use: temperature or wind_speed.")
+        print("Nederīga metrika. Izmantojiet: temperature vai wind_speed.")
 
 
 def _plotter_map():
@@ -34,9 +34,9 @@ def _plotter_map():
 
 
 def parse_args(argv=None):
-    parser = argparse.ArgumentParser(description="Weather analyzer using Open-Meteo data")
-    parser.add_argument("--city", help="City name, for example: Rīga")
-    parser.add_argument("--metric", help="Metric name: temperature or wind_speed")
+    parser = argparse.ArgumentParser(description="Laikapstākļu prognoze izmantojot Open-Meteo datus")
+    parser.add_argument("--city", help="Pilsētas nosaukums, piemēram: Rīga")
+    parser.add_argument("--metric", help="Metrikas nosaukums: temperature vai wind_speed")
     return parser.parse_args(argv)
 
 
@@ -48,7 +48,7 @@ def resolve_city(cities, city_arg=None):
         if city.lower() == city_arg.lower():
             return city
 
-    raise ValueError("City not found. Please choose from the list.")
+    raise ValueError("Pilsēta nav atrasta. Lūdzu, izvēlieties no saraksta.")
 
 
 def resolve_plotter(metric_arg=None):
@@ -61,7 +61,7 @@ def resolve_plotter(metric_arg=None):
     if metric in plotters:
         return plotters[metric]()
 
-    raise ValueError("Invalid metric. Use: temperature or wind_speed.")
+    raise ValueError("Nederīga metrika. Izmantojiet: temperature vai wind_speed.")
 
 
 def main(argv=None):

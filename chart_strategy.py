@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 
 
 class MetricPlotter:
-    """Base class for plotting one metric."""
+    """Pamata klase vienas metrikas attēlošanai."""
 
     metric_name = ""
     metric_label = ""
@@ -16,8 +16,8 @@ class MetricPlotter:
 
         plt.figure(figsize=(9, 5))
         plt.plot(labels, values, marker="o", linewidth=2)
-        plt.title(f"{city_name} - {self.metric_label} by Date/Time")
-        plt.xlabel("Date/Time")
+        plt.title(f"{city_name} - {self.metric_label} pēc datuma/laika")
+        plt.xlabel("Datums/Laiks")
         plt.ylabel(self.metric_label)
         plt.grid(True, alpha=0.3)
         plt.xticks(rotation=45, ha="right")
