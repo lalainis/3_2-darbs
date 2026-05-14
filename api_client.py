@@ -39,24 +39,25 @@ class WeatherDataLoader:
         self.city_coordinates = city_coordinates
         self.data_client = data_client or WeatherDataClient()
 
+    def _parse_records(self, city, payload):
+        hourly = payload.get("hourly", {})
+        for stamp, temperature, wind_speed in zip(
+            hourly.get("time", []),
+            hourly.get("temperature_2m", []),
+            hourly.get("wind_speed_10m", []),
+        ):
+            yield WeatherRecord(
+                city=city,
+                date_time=datetime.fromisoformat(stamp),
+                temperature=float(temperature),
+                wind_speed=float(wind_speed),
+            )
+
     def load_records(self):
-        records = []
-
-        for city, (latitude, longitude) in self.city_coordinates.items():
-            payload = self.data_client.fetch_weather(latitude, longitude)
-            hourly = payload.get("hourly", {})
-            times = hourly.get("time", [])
-            temperatures = hourly.get("temperature_2m", [])
-            wind_speeds = hourly.get("wind_speed_10m", [])
-
-            for stamp, temperature, wind_speed in zip(times, temperatures, wind_speeds):
-                records.append(
-                    WeatherRecord(
-                        city=city,
-                        date_time=datetime.fromisoformat(stamp),
-                        temperature=float(temperature),
-                        wind_speed=float(wind_speed),
-                    )
-                )
-
-        return records
+        return [
+            record
+            for city, (latitude, longitude) in self.city_coordinates.items()
+            for record in self._parse_records(
+                city, self.data_client.fetch_weather(latitude, longitude)
+            )
+        ]
