@@ -68,6 +68,15 @@ class TestWeatherAnalysis(unittest.TestCase):
         self.assertEqual(records[0].city, "Riga")
         self.assertEqual(records[1].temperature, 5.0)
 
+    @patch.object(WeatherDataClient, "fetch_weather")
+    def test_api_loading_error_propagates(self, mock_fetch_weather):
+        mock_fetch_weather.side_effect = TimeoutError("Open-Meteo request timed out")
+
+        loader = WeatherDataLoader({"Riga": CITY_COORDINATES["Rīga"]})
+
+        with self.assertRaises(TimeoutError):
+            loader.load_records()
+
     def test_filter_by_city(self):
         records = [
             WeatherRecord("Riga", datetime(2026, 5, 14, 10, 0), 5.0, 15.0),
