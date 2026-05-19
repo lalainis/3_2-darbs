@@ -1,16 +1,25 @@
+import logging
+from typing import List
+
 import matplotlib.pyplot as plt
+
+from models import WeatherRecord
+
+logger = logging.getLogger(__name__)
 
 
 class MetricPlotter:
     """Pamata klase vienas metrikas attēlošanai."""
 
-    metric_name = ""
-    metric_label = ""
+    metric_name: str = ""
+    metric_label: str = ""
 
-    def values(self, records):
+    def values(self, records: List[WeatherRecord]) -> List[float]:
+        """Extract metric values from records."""
         return [record.value_for(self.metric_name) for record in records]
 
-    def plot(self, city_name, records):
+    def plot(self, city_name: str, records: List[WeatherRecord]) -> None:
+        """Plot metric data for city."""
         labels = [record.date_time.strftime("%Y-%m-%d %H:%M") for record in records]
         values = self.values(records)
 
@@ -22,6 +31,7 @@ class MetricPlotter:
         plt.grid(True, alpha=0.3)
         plt.xticks(rotation=45, ha="right")
         plt.tight_layout()
+        logger.info(f"Rada grafikonu pār {city_name} ({self.metric_name})")
         plt.show()
 
 

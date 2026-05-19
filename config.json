@@ -1,0 +1,34 @@
+{
+  "cities": {
+    "Rīga": {
+      "latitude": 56.9496,
+      "longitude": 24.1052,
+      "name_en": "Riga"
+    },
+    "Liepāja": {
+      "latitude": 56.5047,
+      "longitude": 21.0108,
+      "name_en": "Liepaja"
+    },
+    "Daugavpils": {
+      "latitude": 55.8747,
+      "longitude": 26.5362,
+      "name_en": "Daugavpils"
+    }
+  },
+  "api": {
+    "base_url": "https://api.open-meteo.com/v1/forecast",
+    "timeout_seconds": 15,
+    "forecast_days": 2
+  },
+  "metrics": {
+    "temperature": {
+      "label": "Temperature (C)",
+      "unit": "°C"
+    },
+    "wind_speed": {
+      "label": "Wind speed (m/s)",
+      "unit": "m/s"
+    }
+  }
+}
