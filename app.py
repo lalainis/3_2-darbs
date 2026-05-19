@@ -5,7 +5,7 @@ import sys
 from typing import Dict, List, Optional, Type
 from urllib.error import URLError
 
-# Ensure UTF-8 encoding for console output
+# Pārliecinās, ka konsoles izvade ir UTF-8 kodēta
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
@@ -47,10 +47,10 @@ def _plotter_map() -> Dict[str, Type[MetricPlotter]]:
 
 def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Laikapstākļu prognoze izmantojot Open-Meteo datus")
-    parser.add_argument("--city", help="Pilsētas nosaukums, piemeram: Rīga")
+    parser.add_argument("--city", help="Pilsētas nosaukums, piemēram: Rīga")
     parser.add_argument("--metric", help="Metrikas nosaukums: temperature vai wind_speed")
-    parser.add_argument("--no-plot", action="store_true", help="Neraadit grafikonu, tikai skaitliska vertiba")
-    parser.add_argument("--log-level", default="INFO", help="Log level: DEBUG, INFO, WARNING, ERROR")
+    parser.add_argument("--no-plot", action="store_true", help="Nerādit grafiku, tikai skaitliska vērtība")
+    parser.add_argument("--log-level", default="INFO", help="Log līmenis: DEBUG, INFO, WARNING, ERROR")
     return parser.parse_args(argv)
 
 
@@ -79,16 +79,16 @@ def resolve_plotter(metric_arg: Optional[str] = None) -> MetricPlotter:
 
 
 def main(argv: Optional[List[str]] = None) -> None:
-    """Main application entry point."""
+    """Galvenās programmas ieejas funkcija."""
     args = parse_args(argv)
     
-    # Configure logging with UTF-8 encoding
+    # konfigurē logging ar UTF-8 kodējumu
     logging.basicConfig(
         level=getattr(logging, args.log_level.upper(), logging.INFO),
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
         encoding='utf-8'
     )
-    logger.info("Aplikacija sakārības")
+    logger.info("Aplikācija sākas")
 
     try:
         loader = WeatherDataLoader(CITY_COORDINATES)
@@ -111,22 +111,22 @@ def main(argv: Optional[List[str]] = None) -> None:
         print(f"Average {selected_plotter.metric_label}: {average_value:.2f}\n")
 
         if not args.no_plot:
-            logger.info("Radaču grafikonu...")
+            logger.info("Rāda grafiku...")
             selected_plotter.plot(selected_city, filtered_records)
         else:
-            logger.info("Grafiks ir izslegtāts (--no-plot)")
+            logger.info("Grafiks ir izslēgts (--no-plot)")
             
     except ValueError as e:
-        logger.error(f"Validacijas kļūda: {e}")
-        print(f"Validacijas kļūda: {e}", file=sys.stderr)
+        logger.error(f"Validācijas kļūda: {e}")
+        print(f"Validācijas kļūda: {e}", file=sys.stderr)
         raise SystemExit(1) from e
     except (URLError, RuntimeError) as e:
         logger.error(f"Datu ielādes kļūda: {e}")
         print(f"Datu ielādes kļūda: {e}", file=sys.stderr)
         raise SystemExit(2) from e
     except KeyboardInterrupt:
-        logger.info("Lietotājs apstadināja programmu")
-        print("\nProgramma apstadināta.")
+        logger.info("Lietotājs apstādināja programmu")
+        print("\nProgramma apstādināta.")
         raise SystemExit(0) from None
     except Exception as e:
         logger.exception(f"Neparedzēta kļūda: {e}")

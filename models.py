@@ -24,16 +24,16 @@ class WeatherAnalyzer:
         self.records = records
 
     def available_cities(self) -> List[str]:
-        """Return sorted list of unique cities."""
+        """Atgriež pieejamo pilsētu sarakstu."""
         return sorted({record.city for record in self.records})
 
     def filter_by_city(self, city_name: str) -> List[WeatherRecord]:
-        """Filter records by city name (case-insensitive)."""
+        """Filtrē ierakstus pēc pilsētas nosaukuma (neatkarīgi no lielajiem/mazajiem burtiem)."""
         filtered = [record for record in self.records if record.city.lower() == city_name.lower()]
         return sorted(filtered, key=lambda record: record.date_time)
 
     def average_for(self, records: List[WeatherRecord], metric: str) -> float:
-        """Calculate average value for metric across records."""
+        """Aprēķina vidējo vērtību metrikai pāri ierakstiem."""
         if not records:
             return 0.0
         return sum(record.value_for(metric) for record in records) / len(records)
