@@ -16,6 +16,11 @@ Programma iegust laika datus no Open-Meteo API, aprēķina vidējo vērtību izv
 - Python 3.10+
 - matplotlib>=3.8
 
+## Python versija
+
+- Minimāli atbalstītā versija: Python 3.10
+- Ieteicamā versija: Python 3.11+
+
 ## Instalēšana
 
 ```bash
